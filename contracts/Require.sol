@@ -17,3 +17,21 @@ contract Require {
         // mint the user a token
     }
 }
+
+contract OptimizedRequire {
+    // Do not modify these variables
+    uint256 constant COOLDOWN = 1 minutes;
+    uint256 lastPurchaseTime;
+
+    // Optimize this function
+    function purchaseToken() external payable {
+        unchecked {
+            if (msg.value != 0.1 ether) revert('cannot purchase');
+            if (block.timestamp <= lastPurchaseTime + COOLDOWN)
+                revert('cannot purchase');
+
+            lastPurchaseTime = block.timestamp;
+        }
+        // mint the user a token
+    }
+}
